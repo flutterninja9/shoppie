@@ -1,1 +1,1 @@
-OK
+Has BE and FE code for shoppie: A Ecommerce platform made via go and flutter
