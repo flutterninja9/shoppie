@@ -108,5 +108,19 @@ func UpdateProduct(c *fiber.Ctx) error {
 }
 
 func DeleteProduct(c *fiber.Ctx) error {
-	return c.SendStatus(200)
+	id := c.Params("id")
+	product, err := database.GetProductById(id)
+	if err != nil {
+		return c.SendStatus(500)
+	}
+
+	deleteErr := database.DeleteProduct(product)
+
+	if deleteErr != nil {
+		return c.SendStatus(500)
+	}
+
+	return c.Status(200).JSON(fiber.Map{
+		"message": "Product deleted",
+	})
 }
