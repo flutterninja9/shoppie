@@ -3,6 +3,7 @@ package middleware
 import (
 	"os"
 	"strings"
+	"time"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
@@ -37,15 +38,25 @@ func AuthMiddleware(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusUnauthorized, "Invalid token")
 	}
 
-	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		authInfo := &AuthInfo{
-			Token:  bearerToken,
-			Claims: claims,
-		}
-		c.Locals("authInfo", authInfo)
-	} else {
+	claims, ok := token.Claims.(jwt.MapClaims)
+
+	if !ok || !token.Valid {
 		return fiber.NewError(fiber.StatusUnauthorized, "Invalid token")
 	}
+
+	exp, ok := claims["exp"].(float64)
+	if !ok {
+		return fiber.NewError(fiber.StatusUnauthorized, "Invalid token: missing exp claim")
+	}
+	if int64(exp) < time.Now().Unix() {
+		return fiber.NewError(fiber.StatusUnauthorized, "Token expired")
+	}
+
+	authInfo := &AuthInfo{
+		Token:  bearerToken,
+		Claims: claims,
+	}
+	c.Locals("authInfo", authInfo)
 
 	return c.Next()
 }
