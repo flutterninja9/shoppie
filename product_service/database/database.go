@@ -37,6 +37,16 @@ func CreateProduct(product *models.ProductModel) (*models.ProductModel, error) {
 	return product, nil
 }
 
+func UpdateProduct(product *models.ProductModel) error {
+	result := dbInstance.Save(product)
+
+	if result.Error != nil {
+		return result.Error
+	}
+
+	return nil
+}
+
 func GetProductById(id string) (*models.ProductModel, error) {
 	product := new(models.ProductModel)
 	result := dbInstance.First(product, "id=?", id)

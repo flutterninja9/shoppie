@@ -23,7 +23,7 @@ func SetupRoutes(app *fiber.App, logger *logrus.Logger) {
 	v1.Get("/", controllers.GetAllProducts)
 	v1.Post("/", controllers.CreateProduct)
 	v1.Get("/:id", controllers.GetProductById)
-	v1.Patch("/:id", controllers.UpdateProduct)
+	v1.Put("/:id", controllers.UpdateProduct)
 	v1.Delete("/:id", controllers.DeleteProduct)
 	logger.Info("Routes setup done")
 }

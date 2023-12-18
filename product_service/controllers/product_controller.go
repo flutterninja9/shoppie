@@ -8,6 +8,13 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+type UpdateProductRequest struct {
+	Name        *string  `json:"name"`
+	Description *string  `json:"description"`
+	Price       *float64 `json:"price"`
+	Quantity    *int     `json:"quantity"`
+}
+
 func GetAllProducts(c *fiber.Ctx) error {
 	products, err := database.GetAllProducts()
 	if err != nil {
@@ -59,7 +66,45 @@ func CreateProduct(c *fiber.Ctx) error {
 }
 
 func UpdateProduct(c *fiber.Ctx) error {
-	return c.SendStatus(200)
+	id := c.Params("id")
+	product, fetchErr := database.GetProductById(id)
+
+	if fetchErr != nil {
+		return c.Status(404).JSON(fiber.Map{
+			"message": "Product not found",
+		})
+	}
+
+	updateReq := new(UpdateProductRequest)
+	err := c.BodyParser(updateReq)
+	if err != nil {
+		return c.SendStatus(fiber.ErrBadRequest.Code)
+	}
+
+	if updateReq.Name != nil {
+		product.Name = *updateReq.Name
+	}
+	if updateReq.Description != nil {
+		product.Description = *updateReq.Description
+	}
+	if updateReq.Quantity != nil {
+		product.Quantity = *updateReq.Quantity
+	}
+	if updateReq.Price != nil {
+		product.Price = *updateReq.Price
+	}
+
+	updateErr := database.UpdateProduct(product)
+	if updateErr != nil {
+		return c.Status(500).JSON(fiber.Map{
+			"message": "Oops! something went wrong while saving",
+		})
+	}
+
+	return c.Status(200).JSON(fiber.Map{
+		"message": "Product updated successfully",
+		"data":    product,
+	})
 }
 
 func DeleteProduct(c *fiber.Ctx) error {
