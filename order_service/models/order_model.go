@@ -1,8 +1,7 @@
 package models
 
 import (
-	"order_service/globals"
-
+	"github.com/flutterninja9/shoppie/order_service/globals"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
