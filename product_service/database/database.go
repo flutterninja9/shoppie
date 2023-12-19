@@ -2,8 +2,8 @@ package database
 
 import (
 	"os"
-	"product_service/models"
 
+	"github.com/flutterninja9/shoppie/product_service/models"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

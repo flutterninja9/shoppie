@@ -1,7 +1,9 @@
 package middlewares
 
 import (
-	"product_service/services"
+	"os"
+
+	usersdk "github.com/flutterninja9/shoppie/user_sdk"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -13,7 +15,8 @@ func UserCheckerMiddleWare(c *fiber.Ctx) error {
 		return c.SendStatus(401)
 	}
 
-	userExists := services.GetUserService().UserExistsWithId(authInfo.Claims["user_id"].(string), authInfo.Token)
+	userService := usersdk.NewUserService(os.Getenv("USER_SERVICE_BASE_URL"))
+	userExists := userService.UserExistsWithId(authInfo.Claims["user_id"].(string), authInfo.Token)
 	if !userExists {
 		return c.SendStatus(401)
 	}

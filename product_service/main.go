@@ -2,9 +2,9 @@ package main
 
 import (
 	"os"
-	"product_service/database"
-	"product_service/router"
 
+	"github.com/flutterninja9/shoppie/product_service/database"
+	"github.com/flutterninja9/shoppie/product_service/router"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"

@@ -1,10 +1,9 @@
 package controllers
 
 import (
-	"product_service/database"
-	"product_service/middlewares"
-	"product_service/models"
-
+	"github.com/flutterninja9/shoppie/product_service/database"
+	"github.com/flutterninja9/shoppie/product_service/middlewares"
+	"github.com/flutterninja9/shoppie/product_service/models"
 	"github.com/gofiber/fiber/v2"
 )
 
