@@ -2,8 +2,9 @@ package main
 
 import (
 	"os"
-	"user_service/database"
-	"user_service/router"
+
+	"github.com/flutterninja9/shoppie/user_service/database"
+	"github.com/flutterninja9/shoppie/user_service/router"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"

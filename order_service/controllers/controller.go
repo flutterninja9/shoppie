@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"order_service/database"
+	"github.com/flutterninja9/shoppie/order_service/database"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/sirupsen/logrus"

@@ -1,7 +1,7 @@
 package database
 
 import (
-	"order_service/models"
+	"github.com/flutterninja9/shoppie/order_service/models"
 
 	"github.com/sirupsen/logrus"
 )

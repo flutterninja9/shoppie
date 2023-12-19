@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"user_service/database"
-	"user_service/middleware"
-	"user_service/models"
+	"github.com/flutterninja9/shoppie/user_service/database"
+	"github.com/flutterninja9/shoppie/user_service/middleware"
+	"github.com/flutterninja9/shoppie/user_service/models"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/sirupsen/logrus"

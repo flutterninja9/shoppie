@@ -2,7 +2,8 @@ package database
 
 import (
 	"os"
-	"user_service/models"
+
+	"github.com/flutterninja9/shoppie/user_service/models"
 
 	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"

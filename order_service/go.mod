@@ -1,4 +1,4 @@
-module order_service
+module github.com/flutterninja9/shoppie/order_service
 
 go 1.21.0
 

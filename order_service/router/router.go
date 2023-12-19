@@ -1,8 +1,8 @@
 package router
 
 import (
-	"order_service/controllers"
-	"order_service/middlewares"
+	"github.com/flutterninja9/shoppie/order_service/controllers"
+	"github.com/flutterninja9/shoppie/order_service/middlewares"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/sirupsen/logrus"

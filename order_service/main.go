@@ -1,9 +1,10 @@
 package main
 
 import (
-	"order_service/database"
-	"order_service/router"
 	"os"
+
+	"github.com/flutterninja9/shoppie/order_service/database"
+	"github.com/flutterninja9/shoppie/order_service/router"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"

@@ -1,4 +1,4 @@
-module user_service
+module github.com/flutterninja9/shoppie/user_service
 
 go 1.21.0
 

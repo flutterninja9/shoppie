@@ -1,8 +1,8 @@
 package router
 
 import (
-	"user_service/controllers"
-	"user_service/middleware"
+	"github.com/flutterninja9/shoppie/user_service/controllers"
+	"github.com/flutterninja9/shoppie/user_service/middleware"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/sirupsen/logrus"
