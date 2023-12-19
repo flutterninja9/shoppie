@@ -23,9 +23,12 @@ func SetupRoutes(app *fiber.App, logger *logrus.Logger) {
 	})
 
 	// Create a new order
-	v1.Post("/", func(c *fiber.Ctx) error {
-		return controllers.CreateNewOrder(c, logger)
-	})
+	v1.Post(
+		"/",
+		middlewares.UserExistenceCheckMiddleware,
+		func(c *fiber.Ctx) error {
+			return controllers.CreateNewOrder(c, logger)
+		})
 
 	// Get order details
 	v1.Get("/:id", func(c *fiber.Ctx) error {
@@ -33,17 +36,25 @@ func SetupRoutes(app *fiber.App, logger *logrus.Logger) {
 	})
 
 	// Get orders of a user
-	v1.Get("/user/:userId", func(c *fiber.Ctx) error {
-		return controllers.GetOrdersOfUser(c, logger)
-	})
+	v1.Get(
+		"/user/:userId",
+		middlewares.UserExistenceCheckMiddleware,
+		func(c *fiber.Ctx) error {
+			return controllers.GetOrdersOfUser(c, logger)
+		})
 
 	// Update order
-	v1.Put("/:id", func(c *fiber.Ctx) error {
-		return controllers.UpdateOrder(c, logger)
-	})
+	v1.Put("/:id",
+		middlewares.UserExistenceCheckMiddleware,
+		func(c *fiber.Ctx) error {
+			return controllers.UpdateOrder(c, logger)
+		})
 
 	// Cancel order
-	v1.Get("/:id/cancel", func(c *fiber.Ctx) error {
-		return controllers.CancelOrder(c, logger)
-	})
+	v1.Get(
+		"/:id/cancel",
+		middlewares.UserExistenceCheckMiddleware,
+		func(c *fiber.Ctx) error {
+			return controllers.CancelOrder(c, logger)
+		})
 }
