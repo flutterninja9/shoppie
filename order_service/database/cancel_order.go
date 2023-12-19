@@ -1,6 +1,8 @@
 package database
 
 import (
+	"order_service/globals"
+
 	"github.com/sirupsen/logrus"
 )
 
@@ -13,7 +15,7 @@ func CancelOrder(orderId string, logger *logrus.Logger) error {
 		return fetchErr
 	}
 
-	order.Status = "cancelled"
+	order.Status = string(globals.Cancelled)
 	result := DbInstance.Save(&order)
 
 	if result.Error != nil {

@@ -1,6 +1,8 @@
 package models
 
 import (
+	"order_service/globals"
+
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
@@ -16,5 +18,17 @@ type OrderModel struct {
 
 func (order *OrderModel) BeforeCreate(tx *gorm.DB) (err error) {
 	order.ID = uuid.New()
+	order.Status = string(globals.Active)
+	return
+}
+
+func (order *OrderModel) BeforeUpdate(tx *gorm.DB) (err error) {
+	var totalAmt float64
+
+	for _, item := range order.OrderItems {
+		totalAmt += float64(item.Quantity) * item.Price
+	}
+
+	order.TotalAmount = totalAmt
 	return
 }
