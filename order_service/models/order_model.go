@@ -17,17 +17,6 @@ type OrderModel struct {
 
 func (order *OrderModel) BeforeCreate(tx *gorm.DB) (err error) {
 	order.ID = uuid.New()
-	order.Status = string(globals.Active)
-	return
-}
-
-func (order *OrderModel) BeforeUpdate(tx *gorm.DB) (err error) {
-	var totalAmt float64
-
-	for _, item := range order.OrderItems {
-		totalAmt += float64(item.Quantity) * item.Price
-	}
-
-	order.TotalAmount = totalAmt
+	order.Status = string(globals.InProcessing)
 	return
 }
