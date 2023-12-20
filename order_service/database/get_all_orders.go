@@ -10,7 +10,7 @@ func GetAllOrders(logger *logrus.Logger) ([]models.OrderModel, error) {
 	logger.Info("Fetching all orders")
 
 	var orders []models.OrderModel
-	result := DbInstance.Find(&orders)
+	result := DbInstance.Preload("OrderItems").Find(&orders)
 
 	if result.Error != nil {
 		logger.Errorf("Failed to get orders %v", result.Error)

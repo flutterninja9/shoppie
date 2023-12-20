@@ -62,8 +62,19 @@ func GetOrderById(c *fiber.Ctx, logger *logrus.Logger) error {
 
 	return c.Status(200).JSON(order)
 }
+
 func GetOrdersOfUser(c *fiber.Ctx, logger *logrus.Logger) error {
+	authData, _ := c.Locals("authInfo").(*middlewares.AuthInfo)
+
+	tokenId := authData.Claims["user_id"].(string)
 	userId := c.Params("userId")
+
+	// Check if token provided is of same user which is coming in param
+	if tokenId != userId {
+		logger.Warning("User authInfo mismatch")
+		return c.SendStatus(fiber.StatusUnauthorized)
+	}
+
 	orders, err := database.GetUserOrders(userId, logger)
 	if err != nil {
 		return c.SendStatus(500)
@@ -71,9 +82,36 @@ func GetOrdersOfUser(c *fiber.Ctx, logger *logrus.Logger) error {
 
 	return c.Status(200).JSON(orders)
 }
+
 func UpdateOrder(c *fiber.Ctx, logger *logrus.Logger) error {
-	return c.SendString("UpdateOrder")
+	orderId := c.Params("id")
+
+	order, err := database.GetOrderById(orderId, logger)
+
+	if err != nil {
+		logger.Warn(err)
+		return c.SendStatus(404)
+	}
+
+	updateRequest := new(UpdateOrderStatusRequest)
+	parseErr := c.BodyParser(updateRequest)
+
+	if parseErr != nil {
+		logger.Warn("Request body not correct")
+		return c.SendStatus(fiber.ErrBadRequest.Code)
+	}
+
+	order.Status = string(updateRequest.Status)
+	updateErr := database.UpdateOrder(&order, logger)
+
+	if updateErr != nil {
+		logger.Warn(updateErr)
+		return c.SendStatus(fiber.StatusInternalServerError)
+	}
+
+	return c.Status(200).JSON(order)
 }
+
 func CancelOrder(c *fiber.Ctx, logger *logrus.Logger) error {
 	orderId := c.Params("id")
 	err := database.CancelOrder(orderId, logger)

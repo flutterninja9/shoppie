@@ -20,3 +20,14 @@ func (order *OrderModel) BeforeCreate(tx *gorm.DB) (err error) {
 	order.Status = string(globals.InProcessing)
 	return
 }
+
+func (order *OrderModel) BeforeUpdate(tx *gorm.DB) (err error) {
+	var totalAmt float64
+
+	for _, item := range order.OrderItems {
+		totalAmt += float64(item.Quantity) * item.Price
+	}
+
+	order.TotalAmount = totalAmt
+	return
+}

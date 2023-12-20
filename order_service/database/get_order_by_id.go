@@ -10,7 +10,7 @@ func GetOrderById(orderId string, logger *logrus.Logger) (models.OrderModel, err
 	logger.Info("Fetching user orders")
 
 	order := new(models.OrderModel)
-	result := DbInstance.First(&order, "id=?", orderId)
+	result := DbInstance.Preload("OrderItems").First(&order, "id=?", orderId)
 
 	if result.Error != nil {
 		logger.Errorf("Failed to get orders %v", result.Error)
