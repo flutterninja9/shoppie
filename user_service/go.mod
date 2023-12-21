@@ -4,14 +4,17 @@ go 1.21.0
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/flutterninja9/shoppie/order_sdk v0.0.1
 	github.com/gofiber/fiber/v2 v2.51.0
-	github.com/google/uuid v1.4.0
+	github.com/google/uuid v1.5.0
 	github.com/joho/godotenv v1.5.1
 	github.com/sirupsen/logrus v1.9.3
 	golang.org/x/crypto v0.14.0
 	gorm.io/driver/postgres v1.5.4
 	gorm.io/gorm v1.25.5
 )
+
+replace github.com/flutterninja9/shoppie/order_sdk => ../order_sdk
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect

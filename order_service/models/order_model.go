@@ -7,7 +7,6 @@ import (
 )
 
 type OrderModel struct {
-	gorm.Model
 	ID          uuid.UUID   `gorm:"type:uuid;primaryKey;" json:"id"`
 	UserID      uuid.UUID   `gorm:"type:uuid;not null" json:"user_id"`
 	Status      string      `gorm:"type:varchar(20);not null" json:"status"`

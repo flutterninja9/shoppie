@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	ordersdk "github.com/flutterninja9/shoppie/order_sdk"
 	"github.com/flutterninja9/shoppie/user_service/database"
 	"github.com/flutterninja9/shoppie/user_service/middleware"
 	"github.com/flutterninja9/shoppie/user_service/models"
@@ -110,6 +111,22 @@ func GetUserById(c *fiber.Ctx, logger *logrus.Logger) error {
 			"error": "No such user found",
 		})
 	}
-
 	return c.Status(200).JSON(user)
+}
+
+func GetUserOrders(c *fiber.Ctx, logger *logrus.Logger, orderSdk *ordersdk.OrderSdk) error {
+	data, ok := c.Locals("authInfo").(*middleware.AuthInfo)
+	if !ok {
+		return c.Status(401).JSON(fiber.Map{
+			"error": "Unauthorized",
+		})
+	}
+	orders, err := orderSdk.GetUserOrders(data.Claims["user_id"].(string), data.Token)
+
+	if err != nil {
+		logger.Warning(err)
+		return c.SendStatus(500)
+	}
+
+	return c.Status(200).JSON(orders)
 }

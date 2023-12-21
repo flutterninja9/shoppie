@@ -6,7 +6,6 @@ import (
 )
 
 type OrderItem struct {
-	gorm.Model
 	ID        uuid.UUID `gorm:"type:uuid;primaryKey;" json:"id"`
 	OrderID   uuid.UUID `gorm:"type:uuid;not null" json:"order_id"`   // Reference to the Order
 	ProductID uuid.UUID `gorm:"type:uuid;not null" json:"product_id"` // Reference to the Product
