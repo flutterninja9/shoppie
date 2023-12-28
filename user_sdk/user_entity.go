@@ -1,5 +1,8 @@
 package usersdk
 
+import "github.com/google/uuid"
+
 type UserEntity struct {
-	Email string `json:"email"`
+	ID    uuid.UUID `json:"id"`
+	Email string    `json:"email"`
 }

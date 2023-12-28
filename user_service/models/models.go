@@ -11,7 +11,6 @@ import (
 )
 
 type UserModel struct {
-	gorm.Model
 	ID        uuid.UUID `gorm:"type:uuid;primaryKey;" json:"id"`
 	Username  string    `gorm:"unique;not null" json:"username"`
 	FirstName string    `json:"first_name"`
