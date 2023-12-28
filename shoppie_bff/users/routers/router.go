@@ -7,21 +7,21 @@ import (
 	"go.uber.org/dig"
 )
 
-func SetupRouters(a *fiber.App, c *dig.Container) error {
+func SetupRouters(a *fiber.App, container *dig.Container) error {
 	api := a.Group("/api")
 	v1 := api.Group("/v1")
 
 	v1.Post("/login", func(c *fiber.Ctx) error {
-		return controllers.Login(c)
+		return controllers.Login(c, container)
 	})
 	v1.Post("/register", func(c *fiber.Ctx) error {
-		return controllers.Register(c)
+		return controllers.Register(c, container)
 	})
 	v1.Get("/user", func(c *fiber.Ctx) error {
-		return controllers.GetUser(c)
+		return controllers.GetUser(c, container)
 	})
 
-	c.Invoke(func(l *logrus.Logger) error {
+	container.Invoke(func(l *logrus.Logger) error {
 		l.Info("Users router -> ✅")
 		return nil
 	})
