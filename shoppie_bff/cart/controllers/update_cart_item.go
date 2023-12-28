@@ -2,9 +2,8 @@ package controllers
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/sirupsen/logrus"
 )
 
-func UpdateCartItem(c *fiber.Ctx, l *logrus.Logger) error {
+func UpdateCartItem(c *fiber.Ctx) error {
 	return c.SendStatus(200)
 }

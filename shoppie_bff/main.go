@@ -3,36 +3,36 @@ package main
 import (
 	cart "github.com/flutterninja9/shoppie/shoppie_bff/cart/routers"
 	"github.com/flutterninja9/shoppie/shoppie_bff/config"
+	"github.com/flutterninja9/shoppie/shoppie_bff/di"
 	orders "github.com/flutterninja9/shoppie/shoppie_bff/orders/routers"
 	products "github.com/flutterninja9/shoppie/shoppie_bff/products/routers"
 	users "github.com/flutterninja9/shoppie/shoppie_bff/users/routers"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
+	"go.uber.org/dig"
 )
-
-var logger = logrus.New()
-var Config *config.AppConfig
 
 func main() {
 	envErr := godotenv.Load(".env")
 
 	if envErr != nil {
-		logger.Panic(envErr)
+		panic(envErr)
 	}
 
-	Config = config.NewAppConfig()
-
-	if Config == nil {
-		logger.Fatal("Unable to load app config")
-	}
-
+	// service locator
+	sl := dig.New()
+	di.SetupDi(sl)
 	app := fiber.New()
 
-	users.SetupRouters(logger, app)
-	products.SetupRouters(logger, app)
-	orders.SetupRouters(logger, app)
-	cart.SetupRouters(logger, app)
+	users.SetupRouters(app, sl)
+	products.SetupRouters(app, sl)
+	orders.SetupRouters(app, sl)
+	cart.SetupRouters(app, sl)
 
-	logger.Fatal(app.Listen(Config.ServerPort))
+	sl.Invoke(func(l *logrus.Logger, c *config.AppConfig) error {
+		l.Fatal(app.Listen(c.ServerPort))
+
+		return nil
+	})
 }
