@@ -67,3 +67,24 @@ func (rec *UserService) UserExistsWithId(id string, authToken string) bool {
 	_, err := rec.GetUserById(id, authToken)
 	return err == nil
 }
+
+func (u *UserService) GetOrders(accessToken string) (*Order, error) {
+	url := u.baseUrl + "/orders"
+
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Authorization", "Bearer "+accessToken)
+
+	client := http.Client{}
+	res, resErr := client.Do(req)
+
+	if resErr != nil {
+		return nil, resErr
+	}
+
+	return OrderFromJson(res.Body), nil
+}

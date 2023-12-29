@@ -2,7 +2,6 @@ package ordersdk
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 )
 
@@ -11,7 +10,6 @@ type OrderSdk struct {
 }
 
 func NewOrderSdk(serviceBaseUrl string) OrderSdk {
-	log.Println(serviceBaseUrl)
 	return OrderSdk{
 		baseUrl: serviceBaseUrl,
 	}
