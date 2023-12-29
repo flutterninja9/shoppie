@@ -3,6 +3,7 @@ module github.com/flutterninja9/shoppie/shoppie_bff
 go 1.21.0
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/flutterninja9/shoppie/user_sdk v0.0.1
 	github.com/gofiber/fiber/v2 v2.51.0
 	github.com/joho/godotenv v1.5.1

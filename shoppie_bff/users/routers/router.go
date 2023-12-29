@@ -1,6 +1,7 @@
 package routers
 
 import (
+	middleware "github.com/flutterninja9/shoppie/shoppie_bff/middlewares"
 	"github.com/flutterninja9/shoppie/shoppie_bff/users/controllers"
 	"github.com/gofiber/fiber/v2"
 	"github.com/sirupsen/logrus"
@@ -17,7 +18,7 @@ func SetupRouters(a *fiber.App, container *dig.Container) error {
 	v1.Post("/register", func(c *fiber.Ctx) error {
 		return controllers.Register(c, container)
 	})
-	v1.Get("/user", func(c *fiber.Ctx) error {
+	v1.Get("/user", middleware.AuthMiddleware, func(c *fiber.Ctx) error {
 		return controllers.GetUser(c, container)
 	})
 
