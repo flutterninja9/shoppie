@@ -19,3 +19,11 @@ func OrderFromJson(r io.Reader) *Order {
 	json.NewDecoder(r).Decode(order)
 	return order
 }
+
+type Orders []Order
+
+func OrdersFromJson(r io.Reader) *Orders {
+	orders := new(Orders)
+	json.NewDecoder(r).Decode(orders)
+	return orders
+}

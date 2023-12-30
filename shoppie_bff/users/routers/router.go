@@ -21,6 +21,9 @@ func SetupRouters(a *fiber.App, container *dig.Container) error {
 	v1.Get("/user", middleware.AuthMiddleware, func(c *fiber.Ctx) error {
 		return controllers.GetUser(c, container)
 	})
+	v1.Get("/orders", middleware.AuthMiddleware, func(c *fiber.Ctx) error {
+		return controllers.GetUserOrders(c, container)
+	})
 
 	container.Invoke(func(l *logrus.Logger) error {
 		l.Info("Users router -> ✅")

@@ -68,7 +68,7 @@ func (rec *UserService) UserExistsWithId(id string, authToken string) bool {
 	return err == nil
 }
 
-func (u *UserService) GetOrders(accessToken string) (*Order, error) {
+func (u *UserService) GetOrders(accessToken string) (*Orders, error) {
 	url := u.baseUrl + "/orders"
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
@@ -86,5 +86,5 @@ func (u *UserService) GetOrders(accessToken string) (*Order, error) {
 		return nil, resErr
 	}
 
-	return OrderFromJson(res.Body), nil
+	return OrdersFromJson(res.Body), nil
 }
