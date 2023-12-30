@@ -6,7 +6,6 @@ import (
 )
 
 type ProductModel struct {
-	gorm.Model
 	ID          uuid.UUID `gorm:"type:uuid;primaryKey;" json:"id"`
 	Name        string    `gorm:"type:varchar(100);not null" json:"name"`
 	Description string    `gorm:"type:text" json:"description"`

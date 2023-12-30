@@ -22,7 +22,9 @@ func GetAllProducts(c *fiber.Ctx) error {
 		})
 	}
 
-	return c.Status(200).JSON(products)
+	return c.Status(200).JSON(fiber.Map{
+		"data": products,
+	})
 }
 
 func GetProductById(c *fiber.Ctx) error {
@@ -34,7 +36,9 @@ func GetProductById(c *fiber.Ctx) error {
 			"message": "No such product found",
 		})
 	}
-	return c.Status(200).JSON(product)
+	return c.Status(200).JSON(fiber.Map{
+		"data": product,
+	})
 }
 
 func CreateProduct(c *fiber.Ctx) error {
