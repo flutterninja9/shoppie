@@ -1,7 +1,6 @@
 package productsdk
 
 import (
-	"encoding/json"
 	"errors"
 	"net/http"
 
@@ -10,7 +9,7 @@ import (
 
 var Validate *validator.Validate
 
-func (ps *ProductSdk) GetProductById(id string, token string) (*ProductEntity, error) {
+func (ps *ProductSdk) GetProductById(id string, token string) (*GetProductByIdResponse, error) {
 	url := ps.BaseUrl + "/" + id
 	request, err := http.NewRequest("GET", url, nil)
 
@@ -27,14 +26,7 @@ func (ps *ProductSdk) GetProductById(id string, token string) (*ProductEntity, e
 	}
 	defer res.Body.Close()
 
-	entity := new(ProductEntity)
-	decodeErr := json.NewDecoder(res.Body).Decode(entity)
-
-	if decodeErr != nil {
-		return nil, decodeErr
-	}
-
-	return entity, nil
+	return GetProductByIdResponseFromJson(res.Body)
 }
 
 // returns true if update request is successfull

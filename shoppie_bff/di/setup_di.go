@@ -1,6 +1,7 @@
 package di
 
 import (
+	productsdk "github.com/flutterninja9/shoppie/product_sdk"
 	"github.com/flutterninja9/shoppie/shoppie_bff/config"
 	usersdk "github.com/flutterninja9/shoppie/user_sdk"
 	"github.com/sirupsen/logrus"
@@ -20,6 +21,10 @@ func SetupDi(c *dig.Container) error {
 
 	c.Provide(func(c *config.AppConfig) (*usersdk.UserService, error) {
 		return usersdk.NewUserService(c.UserServiceBaseUrl), nil
+	})
+
+	c.Provide(func(c *config.AppConfig) (productsdk.ProductSdk, error) {
+		return productsdk.GetProductSdkInstance(c.ProductServiceBaseUrl), nil
 	})
 
 	return nil
