@@ -2,7 +2,7 @@ kill_services:
 	-kill $$(lsof -ti :8000)
 	-kill $$(lsof -ti :8080)
 	-kill $$(lsof -ti :3000)
-	-kill $$(lsof -ti :9090)
+	-kill $$(lsof -ti :9000)
 
 run_order_service:
 	cd order_service && go mod tidy && go run main.go

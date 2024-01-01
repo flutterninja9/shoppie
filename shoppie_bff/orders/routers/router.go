@@ -1,24 +1,32 @@
 package routers
 
 import (
+	middleware "github.com/flutterninja9/shoppie/shoppie_bff/middlewares"
 	"github.com/flutterninja9/shoppie/shoppie_bff/orders/controllers"
 	"github.com/gofiber/fiber/v2"
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 )
 
-func SetupRouters(a *fiber.App, c *dig.Container) error {
+func SetupRouters(a *fiber.App, container *dig.Container) error {
 	api := a.Group("/api")
 	v1 := api.Group("/v1")
+	orders := v1.Group("/orders")
+	orders.Use(middleware.AuthMiddleware)
 
-	v1.Get("/orders", func(c *fiber.Ctx) error {
-		return controllers.GetUserOrders(c)
+	orders.Get("/", func(c *fiber.Ctx) error {
+		return controllers.GetUserOrders(c, container)
 	})
 
-	v1.Post("/orders", func(c *fiber.Ctx) error {
-		return controllers.PlaceOrder(c)
+	orders.Post("/", func(c *fiber.Ctx) error {
+		return controllers.PlaceOrder(c, container)
 	})
-	c.Invoke(func(l *logrus.Logger) error {
+
+	orders.Get("/:id/cancel", func(c *fiber.Ctx) error {
+		return controllers.CancelOrder(c, container)
+	})
+
+	container.Invoke(func(l *logrus.Logger) error {
 		l.Info("Orders router -> ✅")
 		return nil
 	})

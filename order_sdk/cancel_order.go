@@ -1,13 +1,16 @@
 package ordersdk
 
-import "net/http"
+import (
+	"fmt"
+	"net/http"
+)
 
-func (o *OrderSdk) CancelOrder(id string, token string) (*CancelOrderResponse, error) {
+func (o *OrderSdk) CancelOrder(id string, token string) (bool, error) {
 	url := o.baseUrl + "/" + id + "/cancel"
 	req, err := http.NewRequest(http.MethodGet, url, nil)
-
+	fmt.Println(url)
 	if err != nil {
-		return nil, err
+		return false, err
 	}
 
 	req.Header.Add("Authorization", "Bearer "+token)
@@ -15,8 +18,12 @@ func (o *OrderSdk) CancelOrder(id string, token string) (*CancelOrderResponse, e
 	res, err := client.Do(req)
 
 	if err != nil {
-		return nil, err
+		return false, err
 	}
 
-	return CancelOrderResponseToJson(res.Body)
+	if res.StatusCode != http.StatusOK {
+		return false, nil
+	}
+
+	return true, nil
 }
