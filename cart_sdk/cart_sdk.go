@@ -4,6 +4,6 @@ type CartSdk struct {
 	baseUrl string
 }
 
-func NewCartSdk(baseUrl string) *CartSdk {
-	return &CartSdk{baseUrl: baseUrl}
+func NewCartSdk(baseUrl string) CartSdk {
+	return CartSdk{baseUrl: baseUrl}
 }
