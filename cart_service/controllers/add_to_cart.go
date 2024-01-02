@@ -28,5 +28,5 @@ func AddToCart(c *fiber.Ctx, l *logrus.Logger) error {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
-	return c.SendStatus(fiber.StatusOK)
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "Added to cart"})
 }
