@@ -8,7 +8,7 @@ import (
 func AddItemToCart(userId uuid.UUID, items []models.CartItem) error {
 	cart := new(models.CartModel)
 
-	result := DbInstance.Preload("Items").First(cart, "user_id=?", userId)
+	result := DbInstance.Preload("Items").FirstOrCreate(cart, "user_id=?", userId)
 
 	if result.Error != nil {
 		return result.Error
