@@ -1,6 +1,7 @@
 package di
 
 import (
+	cartsdk "github.com/flutterninja9/shoppie/cart_sdk"
 	ordersdk "github.com/flutterninja9/shoppie/order_sdk"
 	productsdk "github.com/flutterninja9/shoppie/product_sdk"
 	"github.com/flutterninja9/shoppie/shoppie_bff/config"
@@ -30,6 +31,10 @@ func SetupDi(c *dig.Container) error {
 
 	c.Provide(func(c *config.AppConfig) (ordersdk.OrderSdk, error) {
 		return ordersdk.NewOrderSdk(c.OrderServiceBaseUrl), nil
+	})
+
+	c.Provide(func(c *config.AppConfig) (cartsdk.CartSdk, error) {
+		return cartsdk.NewCartSdk(c.CartServiceBaseUrl), nil
 	})
 
 	return nil

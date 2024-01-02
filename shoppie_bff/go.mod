@@ -4,6 +4,7 @@ go 1.21.0
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/flutterninja9/shoppie/cart_sdk v0.0.1
 	github.com/flutterninja9/shoppie/order_sdk v0.0.1
 	github.com/flutterninja9/shoppie/product_sdk v0.0.1
 	github.com/flutterninja9/shoppie/user_sdk v0.0.1
@@ -19,6 +20,8 @@ replace github.com/flutterninja9/shoppie/user_sdk => ../user_sdk
 replace github.com/flutterninja9/shoppie/product_sdk => ../product_sdk
 
 replace github.com/flutterninja9/shoppie/order_sdk => ../order_sdk
+
+replace github.com/flutterninja9/shoppie/cart_sdk => ../cart_sdk
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
