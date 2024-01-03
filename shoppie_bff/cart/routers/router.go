@@ -7,27 +7,31 @@ import (
 	"go.uber.org/dig"
 )
 
-func SetupRouters(a *fiber.App, c *dig.Container) error {
+func SetupRouters(a *fiber.App, container *dig.Container) error {
 	api := a.Group("/api")
 	v1 := api.Group("/v1")
 
 	v1.Get("/cart", func(c *fiber.Ctx) error {
-		return controllers.GetCart(c)
+		return controllers.GetCart(c, container)
 	})
 
 	v1.Post("/cart/items", func(c *fiber.Ctx) error {
-		return controllers.AddToCart(c)
+		return controllers.AddToCart(c, container)
 	})
 
 	v1.Put("/cart/items/:itemId", func(c *fiber.Ctx) error {
-		return controllers.UpdateCartItem(c)
+		return controllers.UpdateCartItem(c, container)
 	})
 
 	v1.Delete("/cart/items/:itemId", func(c *fiber.Ctx) error {
-		return controllers.RemoveFromCart(c)
+		return controllers.RemoveFromCart(c, container)
 	})
 
-	c.Invoke(func(l *logrus.Logger) error {
+	v1.Delete("/cart/clear", func(c *fiber.Ctx) error {
+		return controllers.RemoveFromCart(c, container)
+	})
+
+	container.Invoke(func(l *logrus.Logger) error {
 		l.Info("Cart router -> ✅")
 		return nil
 	})

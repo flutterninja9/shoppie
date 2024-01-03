@@ -8,14 +8,13 @@ import (
 	"go.uber.org/dig"
 )
 
-// Deletes item from the cart
-func RemoveFromCart(c *fiber.Ctx, container *dig.Container) error {
+// Clears the user cart
+func ClearCart(c *fiber.Ctx, container *dig.Container) error {
 	authInfo := c.Locals("authInfo").(*middleware.AuthInfo)
 	userId := authInfo.Claims["user_id"].(string)
-	itemId := c.Params("itemId")
 
 	return container.Invoke(func(s *cartsdk.CartSdk, l *logrus.Logger) error {
-		response, err := s.RemoveCartItem(userId, itemId, authInfo.Token)
+		response, err := s.ClearCart(userId, authInfo.Token)
 
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
