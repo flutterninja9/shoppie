@@ -1,0 +1,15 @@
+syntax = "proto3";
+package user_service_rpc;
+option go_package = "github.com/flutterninja9/shoppie/user_service_rpc";
+
+service RPCUserService {
+    rpc HealthCheck(HealthCheckRequest) returns (HealthResponse);
+}
+
+message HealthCheckRequest {
+    /* should be empty */
+}
+
+message HealthResponse {
+    string message = 1;
+}
