@@ -3,11 +3,11 @@ package rpcserver
 import (
 	"context"
 
-	"github.com/flutterninja9/shoppie/user_service_rpc"
+	"github.com/flutterninja9/shoppie/user_service/protos"
 )
 
 type UserRPCServer struct {
-	user_service_rpc.UnimplementedRPCUserServiceServer
+	protos.UnimplementedRPCUserServiceServer
 }
 
 func NewUserRPCServer() *UserRPCServer {
@@ -16,9 +16,9 @@ func NewUserRPCServer() *UserRPCServer {
 
 func (UserRPCServer) HealthCheck(
 	context.Context,
-	*user_service_rpc.HealthCheckRequest,
-) (*user_service_rpc.HealthResponse, error) {
-	return &user_service_rpc.HealthResponse{
+	*protos.HealthCheckRequest,
+) (*protos.HealthResponse, error) {
+	return &protos.HealthResponse{
 		Message: "OK",
 	}, nil
 }

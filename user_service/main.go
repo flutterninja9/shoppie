@@ -5,9 +5,9 @@ import (
 
 	ordersdk "github.com/flutterninja9/shoppie/order_sdk"
 	"github.com/flutterninja9/shoppie/user_service/database"
+	"github.com/flutterninja9/shoppie/user_service/protos"
 	"github.com/flutterninja9/shoppie/user_service/router"
 	rpcserver "github.com/flutterninja9/shoppie/user_service/rpc_server"
-	"github.com/flutterninja9/shoppie/user_service_rpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 
@@ -32,7 +32,7 @@ func main() {
 
 	gs := grpc.NewServer()
 	us := rpcserver.NewUserRPCServer()
-	user_service_rpc.RegisterRPCUserServiceServer(gs, us)
+	protos.RegisterRPCUserServiceServer(gs, us)
 	reflection.Register(gs)
 	// l, e := net.Listen("tcp", ":9090")
 	// if e != nil {

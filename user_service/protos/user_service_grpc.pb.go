@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v4.25.1
-// source: user_service.proto
+// source: protos/user_service.proto
 
-package user_service_rpc
+package protos
 
 import (
 	context "context"
@@ -35,7 +35,7 @@ func NewRPCUserServiceClient(cc grpc.ClientConnInterface) RPCUserServiceClient {
 
 func (c *rPCUserServiceClient) HealthCheck(ctx context.Context, in *HealthCheckRequest, opts ...grpc.CallOption) (*HealthResponse, error) {
 	out := new(HealthResponse)
-	err := c.cc.Invoke(ctx, "/user_service_rpc.RPCUserService/HealthCheck", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/RPCUserService/HealthCheck", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func _RPCUserService_HealthCheck_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/user_service_rpc.RPCUserService/HealthCheck",
+		FullMethod: "/RPCUserService/HealthCheck",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RPCUserServiceServer).HealthCheck(ctx, req.(*HealthCheckRequest))
@@ -92,7 +92,7 @@ func _RPCUserService_HealthCheck_Handler(srv interface{}, ctx context.Context, d
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var RPCUserService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "user_service_rpc.RPCUserService",
+	ServiceName: "RPCUserService",
 	HandlerType: (*RPCUserServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -101,5 +101,5 @@ var RPCUserService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "user_service.proto",
+	Metadata: "protos/user_service.proto",
 }

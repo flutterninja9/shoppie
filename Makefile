@@ -4,9 +4,6 @@ kill_services:
 	-kill $$(lsof -ti :3000)
 	-kill $$(lsof -ti :9000)
 
-gen_user_rpc:
-	protoc -I protos/ protos/user_service.proto --go_out=protos --go-grpc_out=protos
-
 run_order_service:
 	cd order_service && go mod tidy && go run main.go
 
