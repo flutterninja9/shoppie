@@ -1,11 +1,12 @@
 package main
 
 import (
+	"net"
 	"os"
 
 	ordersdk "github.com/flutterninja9/shoppie/order_sdk"
 	"github.com/flutterninja9/shoppie/user_service/database"
-	"github.com/flutterninja9/shoppie/user_service/protos"
+	protos "github.com/flutterninja9/shoppie/user_service/protos"
 	"github.com/flutterninja9/shoppie/user_service/router"
 	rpcserver "github.com/flutterninja9/shoppie/user_service/rpc_server"
 	"google.golang.org/grpc"
@@ -34,17 +35,17 @@ func main() {
 	us := rpcserver.NewUserRPCServer()
 	protos.RegisterRPCUserServiceServer(gs, us)
 	reflection.Register(gs)
-	// l, e := net.Listen("tcp", ":9090")
-	// if e != nil {
-	// 	logger.Error("Unable to listen")
-	// 	panic(e)
-	// }
+	l, e := net.Listen("tcp", ":9090")
+	if e != nil {
+		logger.Error("Unable to listen")
+		panic(e)
+	}
 
 	app := fiber.New()
 	logger.Info("Server started")
 	orderSdk := ordersdk.NewOrderSdk(os.Getenv("ORDER_SERVICE_BASE_URL"))
 	router.SetupRoutes(app, logger, &orderSdk)
-	logger.Fatal(app.Listen(os.Getenv("SERVER_PORT")))
-	// logger.Fatal(gs.Serve(l))
+	// logger.Fatal(app.Listen(os.Getenv("SERVER_PORT")))
+	logger.Fatal(gs.Serve(l))
 	logger.Info("Server stopped")
 }

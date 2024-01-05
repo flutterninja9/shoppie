@@ -1,11 +1,27 @@
 package usersdk
 
 import (
+	"context"
 	"net/http"
+
+	"github.com/flutterninja9/shoppie/user_service/protos"
 )
 
+// Returns [true] is service-health is good
+func (r *UserService) HealthCheck() (string, error) {
+	var req = &protos.HealthCheckRequest{}
+	res, err := r.c.HealthCheck(context.Background(), req)
+
+	if err != nil {
+		return "", err
+	}
+
+	message := res.Message
+	return message, nil
+}
+
 func (r *UserService) GetUserById(id string, authToken string) (*UserEntity, error) {
-	requestUrl := r.baseUrl + "/user"
+	requestUrl := r.b + "/user"
 	request, err := http.NewRequest(http.MethodGet, requestUrl, nil)
 	if err != nil {
 		return nil, err
@@ -24,7 +40,7 @@ func (r *UserService) GetUserById(id string, authToken string) (*UserEntity, err
 
 // Returns [accessToken] if logged in successfully
 func (r *UserService) Login(l *LoginRequest) (*LoginResponse, error) {
-	url := r.baseUrl + "/login"
+	url := r.b + "/login"
 	req, err := http.NewRequest(http.MethodPost, url, l.ToJson())
 
 	if err != nil {
@@ -44,7 +60,7 @@ func (r *UserService) Login(l *LoginRequest) (*LoginResponse, error) {
 }
 
 func (r *UserService) Register(l *RegisterRequest) (*UserEntity, error) {
-	url := r.baseUrl + "/register"
+	url := r.b + "/register"
 	req, err := http.NewRequest(http.MethodPost, url, l.ToJson())
 
 	if err != nil {
@@ -69,7 +85,7 @@ func (rec *UserService) UserExistsWithId(id string, authToken string) bool {
 }
 
 func (u *UserService) GetOrders(accessToken string) (*Orders, error) {
-	url := u.baseUrl + "/orders"
+	url := u.b + "/orders"
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 
