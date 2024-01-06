@@ -1,24 +1,8 @@
 package usersdk
 
 import (
-	"context"
 	"net/http"
-
-	"github.com/flutterninja9/shoppie/user_service/protos"
 )
-
-// Returns [true] is service-health is good
-func (r *UserService) HealthCheck() (string, error) {
-	var req = &protos.HealthCheckRequest{}
-	res, err := r.c.HealthCheck(context.Background(), req)
-
-	if err != nil {
-		return "", err
-	}
-
-	message := res.Message
-	return message, nil
-}
 
 func (r *UserService) GetUserById(id string, authToken string) (*UserEntity, error) {
 	requestUrl := r.b + "/user"
