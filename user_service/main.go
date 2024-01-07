@@ -8,6 +8,7 @@ import (
 	"github.com/flutterninja9/shoppie/user_service/router"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 )
@@ -27,6 +28,11 @@ func main() {
 	}
 
 	app := fiber.New()
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+		AllowHeaders: "Origin, Content-Type, Accept",
+	}))
+
 	logger.Info("Server started")
 	orderSdk := ordersdk.NewOrderSdk(os.Getenv("ORDER_SERVICE_BASE_URL"))
 	router.SetupRoutes(app, logger, &orderSdk)

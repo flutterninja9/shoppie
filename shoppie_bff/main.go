@@ -8,6 +8,7 @@ import (
 	products "github.com/flutterninja9/shoppie/shoppie_bff/products/routers"
 	users "github.com/flutterninja9/shoppie/shoppie_bff/users/routers"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
@@ -24,6 +25,11 @@ func main() {
 	sl := dig.New()
 	di.SetupDi(sl)
 	app := fiber.New()
+
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+		AllowHeaders: "Origin, Content-Type, Accept",
+	}))
 
 	users.SetupRouters(app, sl)
 	products.SetupRouters(app, sl)

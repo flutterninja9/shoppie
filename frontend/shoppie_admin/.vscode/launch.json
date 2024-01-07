@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "shoppie_admin (Debug mode)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": ["-d", "chrome"]
+        },
+        {
+            "name": "shoppie_admin (Profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": ["-d", "chrome", "--profile"]
+        },
+        {
+            "name": "shoppie_admin (Release mode)",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": ["-d", "chrome", "--release"]
+        }
+    ]
+}
