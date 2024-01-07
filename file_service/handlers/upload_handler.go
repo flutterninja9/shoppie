@@ -16,16 +16,7 @@ func NewUploadHandler() *UploadHandler {
 	return &UploadHandler{}
 }
 
-func (u *UploadHandler) Handle(rw http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodPost {
-		handleFileUpload(rw, r)
-		return
-	}
-
-	http.Error(rw, "Method not supported", http.StatusMethodNotAllowed)
-}
-
-func handleFileUpload(rw http.ResponseWriter, r *http.Request) {
+func (u *UploadHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	parseErr := r.ParseMultipartForm(2097152) // 2MB max limit
 	if parseErr != nil {
 		http.Error(rw, "Invalid request", http.StatusBadRequest)

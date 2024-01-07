@@ -24,7 +24,7 @@ func main() {
 	fh := handlers.NewFetchEntityFilesHandler()
 
 	r.PathPrefix("/files/").Handler(http.StripPrefix("/files/", http.FileServer(http.Dir(dir))))
-	r.HandleFunc("/upload", uh.Handle).Methods(http.MethodPost)
+	r.Handle("/upload", uh).Methods(http.MethodPost)
 	r.Handle("/{entity}/{entityId}", fh).Methods(http.MethodGet)
 
 	server := http.Server{
