@@ -28,7 +28,7 @@ func main() {
 	r.Handle("/upload", uh).Methods(http.MethodPost)
 	r.Handle("/{entity}/{entityId}", fh).Methods(http.MethodGet)
 
-	port := os.Getenv("PORT")
+	port := os.Getenv("SERVER_PORT")
 	fmt.Println(port)
 	server := http.Server{
 		Addr:    port,
