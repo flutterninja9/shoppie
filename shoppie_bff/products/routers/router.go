@@ -18,8 +18,20 @@ func SetupRouters(a *fiber.App, container *dig.Container) error {
 		return controllers.GetAllProducts(c, container)
 	})
 
+	products.Post("/", func(c *fiber.Ctx) error {
+		return controllers.CreateProduct(c, container)
+	})
+
 	products.Get("/:productId", func(c *fiber.Ctx) error {
 		return controllers.GetProductDetails(c, container)
+	})
+
+	products.Get("/:productId", func(c *fiber.Ctx) error {
+		return controllers.UpdateProduct(c, container)
+	})
+
+	products.Delete("/:productId", func(c *fiber.Ctx) error {
+		return controllers.UpdateProduct(c, container)
 	})
 
 	container.Invoke(func(l *logrus.Logger) error {
