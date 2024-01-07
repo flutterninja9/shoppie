@@ -19,15 +19,17 @@ func main() {
 	}
 	db.Setup()
 
-	mux := mux.NewRouter()
+	r := mux.NewRouter()
 	uh := handlers.NewUploadHandler()
-	mux.PathPrefix("/files/").Handler(http.StripPrefix("/files/", http.FileServer(http.Dir(dir))))
+	fh := handlers.NewFetchEntityFilesHandler()
 
-	mux.HandleFunc("/upload", uh.Handle).Methods("POST")
+	r.PathPrefix("/files/").Handler(http.StripPrefix("/files/", http.FileServer(http.Dir(dir))))
+	r.HandleFunc("/upload", uh.Handle).Methods(http.MethodPost)
+	r.Handle("/{entity}/{entityId}", fh).Methods(http.MethodGet)
 
 	server := http.Server{
 		Addr:    os.Getenv("PORT"),
-		Handler: mux,
+		Handler: r,
 	}
 
 	log.Fatal(server.ListenAndServe())
