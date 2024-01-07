@@ -1,6 +1,7 @@
 package usersdk
 
 import (
+	"log"
 	"net/http"
 )
 
@@ -44,10 +45,14 @@ func (r *UserService) Login(l *LoginRequest) (*LoginResponse, error) {
 }
 
 func (r *UserService) Register(l *RegisterRequest) (*UserEntity, error) {
+	log.Println("Contructing register url")
 	url := r.b + "/register"
+	log.Println("Contructed url", url)
+	log.Println("Trying to call user-service register api")
 	req, err := http.NewRequest(http.MethodPost, url, l.ToJson())
 
 	if err != nil {
+		log.Fatal("Error in register api req construction", err)
 		return nil, err
 	}
 
@@ -55,6 +60,7 @@ func (r *UserService) Register(l *RegisterRequest) (*UserEntity, error) {
 	client := &http.Client{}
 
 	res, resErr := client.Do(req)
+	log.Println("Got response from user-service register api with statusCode", res.StatusCode, resErr)
 
 	if resErr != nil {
 		return nil, resErr

@@ -35,6 +35,7 @@ func (u *CreateUserRequest) toDBUser() *models.UserModel {
 }
 
 func Register(c *fiber.Ctx, logger *logrus.Logger) error {
+	logger.Info("[User service]: Creating reg request")
 	user := new(CreateUserRequest)
 	parseErr := c.BodyParser(user)
 	if parseErr != nil {
@@ -44,6 +45,7 @@ func Register(c *fiber.Ctx, logger *logrus.Logger) error {
 		})
 	}
 
+	logger.Info("Created reg request")
 	createdUser, dbErr := database.CreateUser(user.toDBUser())
 	if dbErr != nil {
 		logger.Warning(dbErr)
