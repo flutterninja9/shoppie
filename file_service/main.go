@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -27,8 +28,10 @@ func main() {
 	r.Handle("/upload", uh).Methods(http.MethodPost)
 	r.Handle("/{entity}/{entityId}", fh).Methods(http.MethodGet)
 
+	port := os.Getenv("PORT")
+	fmt.Println(port)
 	server := http.Server{
-		Addr:    os.Getenv("PORT"),
+		Addr:    port,
 		Handler: r,
 	}
 
