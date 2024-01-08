@@ -79,9 +79,7 @@ class LoginPage extends StatelessWidget {
   void _login(BuildContext context, String email, String password) {
     if (email.isNotEmpty && password.isNotEmpty) {
       final loginRequest = LoginRequest(email: email, password: password);
-      context.read<AuthNotifier>().login(loginRequest).then((_) {
-        postLoginSucess();
-      });
+      context.read<AuthNotifier>().login(loginRequest, postLoginSucess);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Please enter both email and password'),

@@ -2,6 +2,7 @@ package productsdk
 
 import (
 	"errors"
+	"log"
 	"net/http"
 
 	"github.com/go-playground/validator/v10"
@@ -95,6 +96,7 @@ func (p *ProductSdk) CreateProduct(token string, r *CreateProductRequest) (*Prod
 // Returns true if the product is deleted
 func (p *ProductSdk) DeleteProduct(token string, pId string) (bool, error) {
 	url := p.BaseUrl + "/" + pId
+	log.Println("Hitting url", url, " from sdk to delete product")
 	req, err := http.NewRequest(http.MethodDelete, url, nil)
 
 	if err != nil {
@@ -106,8 +108,10 @@ func (p *ProductSdk) DeleteProduct(token string, pId string) (bool, error) {
 	_, resErr := client.Do(req)
 
 	if resErr != nil {
+		log.Fatal(resErr)
 		return false, resErr
 	}
 
+	log.Println("[SDK]: Deletion call success")
 	return true, nil
 }

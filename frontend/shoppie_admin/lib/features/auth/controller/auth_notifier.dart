@@ -4,7 +4,6 @@ import 'package:shoppie_admin/core/constants/constants.dart';
 import 'package:shoppie_admin/core/exceptions/failure.dart';
 import 'package:shoppie_admin/core/mixins/ui_state_mixins.dart';
 import 'package:shoppie_admin/features/auth/model/login_request.dart';
-import 'package:shoppie_admin/features/auth/model/login_response.dart';
 import 'package:shoppie_admin/features/auth/model/register_request.dart';
 import 'package:shoppie_admin/features/auth/model/user_model.dart';
 import 'package:shoppie_admin/features/auth/repository/auth_repository.dart';
@@ -35,14 +34,14 @@ class AuthNotifier with ChangeNotifier, UiStateMixin {
     );
   }
 
-  Future<void> login(LoginRequest request) async {
+  Future<void> login(LoginRequest request, Function() postLoginSucess) async {
     setLoading(true);
-    Either<LoginResponse, Failure> result =
-        await _authRepository.login(request);
+    final result = await _authRepository.login(request);
     result.fold(
       (loginResponse) {
         _signedIn = true;
         resetState();
+        postLoginSucess();
       },
       (failure) {
         setFailure(failureMessage);

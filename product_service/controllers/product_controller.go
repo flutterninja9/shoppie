@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"log"
+
 	"github.com/flutterninja9/shoppie/product_service/database"
 	"github.com/flutterninja9/shoppie/product_service/middlewares"
 	"github.com/flutterninja9/shoppie/product_service/models"
@@ -112,17 +114,22 @@ func UpdateProduct(c *fiber.Ctx) error {
 
 func DeleteProduct(c *fiber.Ctx) error {
 	id := c.Params("id")
+	log.Println("Trying to fetch product with id:", id)
 	product, err := database.GetProductById(id)
 	if err != nil {
 		return c.SendStatus(500)
 	}
+	log.Println("Found product with id:", id)
 
+	log.Println("Trying to delete product with id:", id)
 	deleteErr := database.DeleteProduct(product)
 
 	if deleteErr != nil {
+		log.Println(deleteErr)
 		return c.SendStatus(500)
 	}
 
+	log.Println("Deleted product with id:", id)
 	return c.Status(200).JSON(fiber.Map{
 		"message": "Product deleted",
 	})

@@ -13,7 +13,7 @@ func DeleteProduct(c *fiber.Ctx, container *dig.Container) error {
 	authInfo := c.Locals("authInfo").(*middleware.AuthInfo)
 
 	return container.Invoke(func(l *logrus.Logger, p productsdk.ProductSdk) error {
-		ok, err := p.DeleteProduct(productId, authInfo.Token)
+		ok, err := p.DeleteProduct(authInfo.Token, productId)
 		if !ok {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})
 		}

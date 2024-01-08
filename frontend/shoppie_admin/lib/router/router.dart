@@ -23,31 +23,31 @@ class AppRouter {
     routes: [
       GoRoute(
         path: AuthView.route,
-        builder: (context, state) {
-          return const AuthView();
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(child: AuthView());
         },
       ),
       ShellRoute(
-        builder: (context, state, page) {
-          return DashboardPage(page: page);
+        pageBuilder: (context, state, page) {
+          return NoTransitionPage(child: DashboardPage(page: page));
         },
         routes: [
           GoRoute(
             path: ViewProductsPage.route,
-            builder: (context, state) {
-              return const ViewProductsPage();
+            pageBuilder: (context, state) {
+              return const NoTransitionPage(child: ViewProductsPage());
             },
           ),
           GoRoute(
             path: AddProductPage.route,
-            builder: (context, state) {
-              return const AddProductPage();
+            pageBuilder: (context, state) {
+              return const NoTransitionPage(child: AddProductPage());
             },
           ),
           GoRoute(
             path: ViewOrdersPage.route,
-            builder: (context, state) {
-              return const ViewOrdersPage();
+            pageBuilder: (context, state) {
+              return const NoTransitionPage(child: ViewOrdersPage());
             },
           ),
         ],

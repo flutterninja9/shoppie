@@ -41,6 +41,10 @@ func (r *UserService) Login(l *LoginRequest) (*LoginResponse, error) {
 		return nil, resErr
 	}
 
+	if res.StatusCode != http.StatusOK {
+		return nil, resErr
+	}
+
 	return LoginResponseFromJson(res.Body)
 }
 
