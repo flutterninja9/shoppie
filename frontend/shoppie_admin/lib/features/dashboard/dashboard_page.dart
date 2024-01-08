@@ -28,6 +28,10 @@ class DashboardPage extends StatelessWidget {
             })
           ],
         ),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
+          onPressed: () {},
+        ),
       ),
     );
   }

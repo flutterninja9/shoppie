@@ -7,7 +7,9 @@ class UserModel {
   final String id;
   final String email;
   final String username;
+  @JsonKey(name: "first_name")
   final String firstName;
+  @JsonKey(name: "last_name")
   final String lastName;
 
   UserModel({
