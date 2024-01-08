@@ -68,7 +68,14 @@ class AuthNotifier with ChangeNotifier, UiStateMixin {
     setLoading(true);
     final loggedIn = await _authRepository.checkIfSignedIn();
     _signedIn = loggedIn;
-    print(_signedIn);
+    resetState();
+  }
+
+  Future<void> logout() async {
+    setLoading(true);
+    await _authRepository.logout();
+    _signedIn = false;
+    _user = null;
     resetState();
   }
 }

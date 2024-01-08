@@ -55,4 +55,11 @@ class AuthRepositoryImpl implements AuthRepository {
 
     return true;
   }
+
+  @override
+  Future<Unit> logout() async {
+    await _preferences.remove("token");
+
+    return unit;
+  }
 }

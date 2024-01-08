@@ -13,4 +13,6 @@ abstract class AuthRepository {
   Future<Either<UserModel, Failure>> signedInUser();
 
   Future<bool> checkIfSignedIn();
+
+  Future<Unit> logout();
 }

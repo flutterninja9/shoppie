@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shoppie_admin/features/auth/view/login_page.dart';
 import 'package:shoppie_admin/features/auth/view/register_page.dart';
-import 'package:shoppie_admin/features/dashboard/dashboard_page.dart';
+import 'package:shoppie_admin/features/products/pages/view_products.dart';
 
 class AuthView extends StatefulWidget {
   const AuthView({super.key});
@@ -21,7 +21,7 @@ class _AuthViewState extends State<AuthView> {
     if (authModeLogin) {
       return LoginPage(
         postLoginSucess: () {
-          context.go(DashboardPage.route);
+          context.go(ViewProductsPage.route);
         },
         onClickRegister: () {
           setState(() {
