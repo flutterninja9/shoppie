@@ -8,6 +8,11 @@ import 'package:shoppie_admin/features/auth/endpoint/auth_api_client.dart';
 import 'package:shoppie_admin/features/auth/repository/auth_repository.dart';
 import 'package:shoppie_admin/features/auth/repository/auth_repository_impl.dart';
 import 'package:shoppie_admin/features/dashboard/controllers/dashboard_controller.dart';
+import 'package:shoppie_admin/features/products/controllers/create_product_controller.dart';
+import 'package:shoppie_admin/features/products/controllers/products_controller.dart';
+import 'package:shoppie_admin/features/products/endpoint/products_endpoint.dart';
+import 'package:shoppie_admin/features/products/repository/products_repository.dart';
+import 'package:shoppie_admin/features/products/repository/products_repository_impl.dart';
 
 final sl = GetIt.I;
 
@@ -17,13 +22,19 @@ Future<void> setupSl() async {
   // controllers
   sl.registerLazySingleton<AuthNotifier>(() => AuthNotifier(sl()));
   sl.registerFactory<DashboardController>(() => DashboardController(sl()));
+  sl.registerFactory<ProductsController>(() => ProductsController(sl()));
+  sl.registerFactory<CreateProductController>(
+      () => CreateProductController(sl()));
 
   // repo
   sl.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(sl(), sl()));
+  sl.registerLazySingleton<ProductsRepository>(
+      () => ProductsRepositoryImpl(sl()));
 
   // endpoints
   sl.registerLazySingleton<AuthApiClient>(() => AuthApiClient(sl()));
+  sl.registerLazySingleton<ProductspiClient>(() => ProductspiClient(sl()));
 
   // external
   final sp = await SharedPreferences.getInstance();
