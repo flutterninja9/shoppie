@@ -33,7 +33,7 @@ func (ps *ProductSdk) GetProductById(id string, token string) (*GetProductByIdRe
 // returns true if update request is successfull
 func (ps *ProductSdk) UpdateProduct(id string, token string, body UpdateProductRequest) (bool, error) {
 	url := ps.BaseUrl + "/" + id
-
+	log.Println("[SDK]: Hitting ", url, " to update product")
 	request, err := http.NewRequest("PUT", url, body.ToJson())
 
 	if err != nil {
@@ -41,14 +41,20 @@ func (ps *ProductSdk) UpdateProduct(id string, token string, body UpdateProductR
 	}
 
 	request.Header.Add("Authorization", "Bearer "+token)
+	request.Header.Add("Content-Type", "application/json")
+
 	client := http.DefaultClient
 	res, reqErr := client.Do(request)
 
 	if reqErr != nil {
+		log.Println("Error in updating product", reqErr)
 		return false, errors.New("unable to request service")
 	}
 	defer res.Body.Close()
 
+	if res.StatusCode != http.StatusOK {
+		return false, errors.New("Request failed with status" + string(res.StatusCode))
+	}
 	return true, nil
 }
 

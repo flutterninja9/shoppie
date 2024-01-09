@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:shoppie_admin/features/products/models/create_product_request.dart';
+import 'package:shoppie_admin/features/products/models/get_product_by_id_response.dart';
 import 'package:shoppie_admin/features/products/models/products_result.dart';
 import 'package:shoppie_admin/features/products/models/update_product_request.dart';
 
@@ -19,7 +20,7 @@ abstract class ProductspiClient {
   Future<void> createProduct(@Body() CreateProductRequest request);
 
   @GET('/products/{pId}')
-  Future<void> getProductDetails(
+  Future<GetProductByIdResponse> getProductDetails(
     @Path() String pId,
   );
 

@@ -5,6 +5,7 @@ import 'package:shoppie_admin/features/auth/view/auth_view.dart';
 import 'package:shoppie_admin/features/dashboard/dashboard_page.dart';
 import 'package:shoppie_admin/features/orders/pages/view_orders.dart';
 import 'package:shoppie_admin/features/products/pages/add_prodcust.dart';
+import 'package:shoppie_admin/features/products/pages/update_product.dart';
 import 'package:shoppie_admin/features/products/pages/view_products.dart';
 
 class AppRouter {
@@ -42,6 +43,15 @@ class AppRouter {
             path: AddProductPage.route,
             pageBuilder: (context, state) {
               return const NoTransitionPage(child: AddProductPage());
+            },
+          ),
+          GoRoute(
+            path: UpdateProductPage.route,
+            pageBuilder: (context, state) {
+              return NoTransitionPage(
+                  child: UpdateProductPage(
+                productId: state.pathParameters["id"] ?? "",
+              ));
             },
           ),
           GoRoute(

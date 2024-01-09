@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppie_admin/di/di.dart';
 import 'package:shoppie_admin/features/dashboard/dashboard_page.dart';
 import 'package:shoppie_admin/features/products/controllers/products_controller.dart';
+import 'package:shoppie_admin/features/products/pages/update_product.dart';
 
 class ViewProductsPage extends StatelessWidget {
   const ViewProductsPage({super.key});
@@ -40,7 +42,8 @@ class ViewProductsPage extends StatelessWidget {
                   child: Row(
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () =>
+                            context.go(UpdateProductPage.makeRoute(product.id)),
                         icon: const Icon(Icons.edit),
                       ),
                       IconButton(

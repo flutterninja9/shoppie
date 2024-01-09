@@ -72,9 +72,11 @@ func CreateProduct(c *fiber.Ctx) error {
 
 func UpdateProduct(c *fiber.Ctx) error {
 	id := c.Params("id")
-	product, fetchErr := database.GetProductById(id)
+	log.Printf("Updating product with ID: %s", id)
 
+	product, fetchErr := database.GetProductById(id)
 	if fetchErr != nil {
+		log.Printf("Failed to fetch product with ID: %s, Error: %v", id, fetchErr)
 		return c.Status(404).JSON(fiber.Map{
 			"message": "Product not found",
 		})
@@ -83,29 +85,36 @@ func UpdateProduct(c *fiber.Ctx) error {
 	updateReq := new(UpdateProductRequest)
 	err := c.BodyParser(updateReq)
 	if err != nil {
+		log.Println("Error parsing request body: %v", err, c.Request())
 		return c.SendStatus(fiber.ErrBadRequest.Code)
 	}
 
 	if updateReq.Name != nil {
 		product.Name = *updateReq.Name
+		log.Printf("Updated Name: %s", *updateReq.Name)
 	}
 	if updateReq.Description != nil {
 		product.Description = *updateReq.Description
+		log.Printf("Updated Description: %s", *updateReq.Description)
 	}
 	if updateReq.Quantity != nil {
 		product.Quantity = *updateReq.Quantity
+		log.Printf("Updated Quantity: %d", *updateReq.Quantity)
 	}
 	if updateReq.Price != nil {
 		product.Price = *updateReq.Price
+		log.Printf("Updated Price: %.2f", *updateReq.Price)
 	}
 
 	updateErr := database.UpdateProduct(product)
 	if updateErr != nil {
+		log.Printf("Failed to update product with ID: %s, Error: %v", id, updateErr)
 		return c.Status(500).JSON(fiber.Map{
 			"message": "Oops! something went wrong while saving",
 		})
 	}
 
+	log.Printf("Product with ID: %s updated successfully", id)
 	return c.Status(200).JSON(fiber.Map{
 		"message": "Product updated successfully",
 		"data":    product,

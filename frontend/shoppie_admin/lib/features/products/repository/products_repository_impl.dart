@@ -1,6 +1,7 @@
 import 'package:shoppie_admin/core/exceptions/failure.dart';
 import 'package:shoppie_admin/features/products/endpoint/products_endpoint.dart';
 import 'package:shoppie_admin/features/products/models/create_product_request.dart';
+import 'package:shoppie_admin/features/products/models/get_product_by_id_response.dart';
 import 'package:shoppie_admin/features/products/models/products_result.dart';
 import 'package:shoppie_admin/features/products/models/update_product_request.dart';
 import 'package:shoppie_admin/features/products/repository/products_repository.dart';
@@ -33,10 +34,11 @@ class ProductsRepositoryImpl implements ProductsRepository {
   }
 
   @override
-  Future<Either<Unit, Failure>> getProductDetails(String productId) async {
+  Future<Either<ProductEntity, Failure>> getProductDetails(
+      String productId) async {
     try {
-      await _apiClient.getProductDetails(productId);
-      return const Left(unit);
+      final result = await _apiClient.getProductDetails(productId);
+      return Left(result.data);
     } catch (e) {
       return Right(UnknownFailure());
     }

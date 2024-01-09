@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"io"
+	"log"
 )
 
 type UpdateProductRequest struct {
@@ -15,6 +16,7 @@ type UpdateProductRequest struct {
 
 func (u *UpdateProductRequest) ToJson() io.Reader {
 	buffer := new(bytes.Buffer)
+	log.Println(u)
 	json.NewEncoder(buffer).Encode(u)
 
 	return buffer

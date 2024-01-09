@@ -4,7 +4,6 @@ part "update_product_request.g.dart";
 
 @JsonSerializable()
 class UpdateProductRequest {
-  final String id;
   final String name;
   final String description;
   final double price;
@@ -12,7 +11,6 @@ class UpdateProductRequest {
 
   UpdateProductRequest({
     required this.description,
-    required this.id,
     required this.name,
     required this.price,
     required this.quantity,

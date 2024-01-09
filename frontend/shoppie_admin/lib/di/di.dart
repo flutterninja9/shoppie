@@ -10,6 +10,7 @@ import 'package:shoppie_admin/features/auth/repository/auth_repository_impl.dart
 import 'package:shoppie_admin/features/dashboard/controllers/dashboard_controller.dart';
 import 'package:shoppie_admin/features/products/controllers/create_product_controller.dart';
 import 'package:shoppie_admin/features/products/controllers/products_controller.dart';
+import 'package:shoppie_admin/features/products/controllers/update_product_controller.dart';
 import 'package:shoppie_admin/features/products/endpoint/products_endpoint.dart';
 import 'package:shoppie_admin/features/products/repository/products_repository.dart';
 import 'package:shoppie_admin/features/products/repository/products_repository_impl.dart';
@@ -25,6 +26,8 @@ Future<void> setupSl() async {
   sl.registerFactory<ProductsController>(() => ProductsController(sl()));
   sl.registerFactory<CreateProductController>(
       () => CreateProductController(sl()));
+  sl.registerFactory<UpdateProductController>(
+      () => UpdateProductController(sl()));
 
   // repo
   sl.registerLazySingleton<AuthRepository>(
