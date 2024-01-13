@@ -8,11 +8,10 @@ import (
 	"go.uber.org/dig"
 )
 
-func GetUserOrders(c *fiber.Ctx, container *dig.Container) error {
+func GetAllOrders(c *fiber.Ctx, container *dig.Container) error {
 	return container.Invoke(func(l *logrus.Logger, s ordersdk.OrderSdk) error {
 		authInfo := c.Locals("authInfo").(*middleware.AuthInfo)
-		userId := authInfo.Claims["user_id"].(string)
-		orders, err := s.GetUserOrders(userId, authInfo.Token)
+		orders, err := s.GetAllOrders(authInfo.Token)
 
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err})

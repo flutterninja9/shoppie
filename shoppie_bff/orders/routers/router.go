@@ -18,6 +18,10 @@ func SetupRouters(a *fiber.App, container *dig.Container) error {
 		return controllers.GetUserOrders(c, container)
 	})
 
+	orders.Get("/all", func(c *fiber.Ctx) error {
+		return controllers.GetAllOrders(c, container)
+	})
+
 	orders.Post("/", func(c *fiber.Ctx) error {
 		return controllers.PlaceOrder(c, container)
 	})

@@ -12,6 +12,7 @@ func (sdk *OrderSdk) GetUserOrders(userId string, authToken string) (*Orders, er
 		return nil, err
 	}
 	request.Header.Add("Authorization", "Bearer "+authToken)
+	request.Header.Add("Content-Type", "application/json")
 
 	client := http.DefaultClient
 	res, reqErr := client.Do(request)

@@ -8,6 +8,10 @@ import 'package:shoppie_admin/features/auth/endpoint/auth_api_client.dart';
 import 'package:shoppie_admin/features/auth/repository/auth_repository.dart';
 import 'package:shoppie_admin/features/auth/repository/auth_repository_impl.dart';
 import 'package:shoppie_admin/features/dashboard/controllers/dashboard_controller.dart';
+import 'package:shoppie_admin/features/orders/controller/order_controller.dart';
+import 'package:shoppie_admin/features/orders/endpoint/orders_endpoint.dart';
+import 'package:shoppie_admin/features/orders/repository/order_repository.dart';
+import 'package:shoppie_admin/features/orders/repository/order_repository_impl.dart';
 import 'package:shoppie_admin/features/products/controllers/create_product_controller.dart';
 import 'package:shoppie_admin/features/products/controllers/products_controller.dart';
 import 'package:shoppie_admin/features/products/controllers/update_product_controller.dart';
@@ -25,19 +29,30 @@ Future<void> setupSl() async {
   sl.registerFactory<DashboardController>(() => DashboardController(sl()));
   sl.registerFactory<ProductsController>(() => ProductsController(sl()));
   sl.registerFactory<CreateProductController>(
-      () => CreateProductController(sl()));
+    () => CreateProductController(sl()),
+  );
   sl.registerFactory<UpdateProductController>(
-      () => UpdateProductController(sl()));
+    () => UpdateProductController(sl()),
+  );
+  sl.registerFactory<OrdersController>(
+    () => OrdersController(sl()),
+  );
 
   // repo
   sl.registerLazySingleton<AuthRepository>(
-      () => AuthRepositoryImpl(sl(), sl()));
+    () => AuthRepositoryImpl(sl(), sl()),
+  );
   sl.registerLazySingleton<ProductsRepository>(
-      () => ProductsRepositoryImpl(sl()));
+    () => ProductsRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<OrderRepository>(
+    () => OrderRepositoryImpl(sl()),
+  );
 
   // endpoints
   sl.registerLazySingleton<AuthApiClient>(() => AuthApiClient(sl()));
   sl.registerLazySingleton<ProductspiClient>(() => ProductspiClient(sl()));
+  sl.registerLazySingleton<OrdersEndpoint>(() => OrdersEndpoint(sl()));
 
   // external
   final sp = await SharedPreferences.getInstance();
