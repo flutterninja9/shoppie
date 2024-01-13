@@ -1,4 +1,4 @@
-# Shoppie
+# Shoppie 🛍️
 
 Welcome to **Shoppie** - an experimental e-commerce platform where we're exploring the power of microservice architecture. Our journey is backend-focused, with Go powering our services, and we've dabbled a bit in Flutter for a minimal frontend.
 
